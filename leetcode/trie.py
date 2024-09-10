@@ -1,12 +1,13 @@
+from typing import *
 class TrieNode:
     def __init__(self):
         self.child = [None] * 26
         self.wordEnd = False
 
 class trie():
-    def __init__(self,root) -> None:
+    def __init__(self,root:TrieNode) -> None:
         self.root = root
-    def insert(self, keys):
+    def insert(self, keys) -> None:
         if self.root is None:
             return 
         cur  = self.root
@@ -17,7 +18,7 @@ class trie():
                 cur.child[index] = new_node
             cur = cur.child[index]
         cur.wordEnd = True
-    def search(self, keys):
+    def search(self, keys:str) -> bool:
         if self.root is None:
             return 
         cur  = self.root
