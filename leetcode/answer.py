@@ -120,7 +120,6 @@ public class Solution {
 
 
 '''
-bipartite
 class Trie {
     private TrieNode root;
     /** Initialize your data structure here. */

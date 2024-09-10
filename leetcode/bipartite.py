@@ -2,12 +2,10 @@
 # given graph is Bipartite or not
 
 class Graph():
-
 	def __init__(self, V):
 		self.V = V
 		self.graph = [[0 for column in range(V)] \
 								for row in range(V)]
-
 	def isBipartite(self, src):
 		colorArr = [-1] * self.V
 		colorArr[src] = 1
@@ -36,4 +34,3 @@ g.graph = [[0, 1, 0, 1],
 			[0, 1, 0, 1],
 			[1, 0, 1, 0]
 			]
-
