@@ -15,11 +15,12 @@ def iterativePreorder(root:Node)->list:
     while stack:
         point = stack.pop()
         result.append(point.data)
-        if point.left is not None:
-            stack.append(point.right)
         if point.right is not None:
+            stack.append(point.right)
+        if point.left is not None:
             stack.append(point.left)
     return result
+
 
 def iterativeInorder(root:Node)->list:
     if root is None:
@@ -67,6 +68,29 @@ def iterativePostorder_2stack(root:Node)->list:
         result.append(node.data)
     return result
     
+def iterativePreorder2_postorder(root:Node)->list:
+    stack = [root]
+    while stack:
+        cur = stack.pop()
+        cur.left, cur.right = cur.right, cur.left
+        if cur.left:
+            stack.append(cur.left)
+        if cur.right:
+            stack.append(cur.right)
+    if root is None:
+        return 
+    result = []
+    stack = []
+    stack.append(root)
+    while stack:
+        point = stack.pop()
+        result.append(point.data)
+        if point.right is not None:
+            stack.append(point.right)
+        if point.left is not None:
+            stack.append(point.left)
+    result.reverse()
+    return result
 
 def iterativePostorder_1stack1(root): 
     ''''''
@@ -169,6 +193,7 @@ class Tree():
         self.preorder(root.left)
         self.result_inorder.append(root.data)
         self.preorder(root.right)
+    @classmethod
     def build_tree(self, inorder: List[int], postorder: List[int])->Node:
         if not inorder or not postorder:
             return None
@@ -177,6 +202,13 @@ class Tree():
         root = Node(root_val)
         root.left = self.build_tree(inorder[:index],postorder[:index])
         root.right = self.build_tree(inorder[index+1:],postorder[index:-1])
+        return root
+    @classmethod
+    def build_regular_tree(self):
+        inorder = [9,3,15,20,7]
+        postorder = [9,15,7,20,3]
+        root = self.build_tree(inorder,postorder)
+        print('tree example:\n        3\n    9     20\n        15   7 ')
         return root
 
 if __name__ == '__main__':
@@ -194,3 +226,5 @@ if __name__ == '__main__':
     # print(iterativePostorder_2stack(root))
     # print(iterativePostorder_1stack1(root))
     print(iterativePostorder_1stack3(root))
+    print(iterativePreorder(root))
+    print(iterativePreorder2_postorder(root))
