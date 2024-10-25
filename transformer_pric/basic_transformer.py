@@ -12,7 +12,18 @@ class MultiHeadAttention(nn.Model):
         self.k_proj = nn.linear(embedding_dim, hidden_dim*num_head,bias=bias)
         self.v_proj = nn.linear(embedding_dim, hidden_dim*num_head,bias=bias)
         self.o_proj = nn.linear(hidden_dim*num_head, hidden_dim*num_head,bias=bias)
-
+    def get_padding_mask(q, k, indicate_id):
+        ''' seq_q: [batch, seq_len]
+            seq_k: [batch, seq_len]
+            return:
+            mask: [batch, len_q, len_k]
+        '''
+        batch_size, q_length = q.size()
+        batch_size, k_length = k.size()
+        #pad_mask = ~(k == pad_token_id)
+        pad_mask = k.eq(indicate_id).unsqeeeze(1)
+        pad_mask=pad_mask.expand(batch_size, q_length, k_length)
+        return pad_mask
     def get_attention_mask(self, seq):
         atten_shape = seq.size()
 
@@ -27,11 +38,4 @@ class MultiHeadAttention(nn.Model):
 if __name__=='__main__':
     '''input data: [batchsize, seq_length, ]'''
     # 使用列表创建矩阵
-    lst = [[1, 2, 3], [4, 5, 6]]
-    tensor1 = torch.tensor(lst)
-
-    # 使用 NumPy 数组创建矩阵
-    arr = np.array([[1, 2, 3], [4, 5, 6]])
-    tensor2 = torch.from_numpy(arr)
-
 
