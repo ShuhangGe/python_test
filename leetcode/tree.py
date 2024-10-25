@@ -1,8 +1,8 @@
 from typing import *
 
 class Node():
-    def __init__(self, data) -> None:
-        self.data = data
+    def __init__(self, val) -> None:
+        self.val = val
         self.left = None
         self.right = None
 
@@ -14,7 +14,7 @@ def iterativePreorder(root:Node)->list:
     stack.append(root)
     while stack:
         point = stack.pop()
-        result.append(point.data)
+        result.append(point.val)
         if point.right is not None:
             stack.append(point.right)
         if point.left is not None:
@@ -35,7 +35,7 @@ def iterativeInorder(root:Node)->list:
             current = current.left
         elif(stack):
             current = stack.pop()
-            result.append(current.data)
+            result.append(current.val)
             current = current.right
         else:
             break
@@ -65,7 +65,7 @@ def iterativePostorder_2stack(root:Node)->list:
             stack1.append(node.right)
     while stack2:
         node = stack2.pop()
-        result.append(node.data)
+        result.append(node.val)
     return result
     
 def iterativePreorder2_postorder(root:Node)->list:
@@ -84,7 +84,7 @@ def iterativePreorder2_postorder(root:Node)->list:
     stack.append(root)
     while stack:
         point = stack.pop()
-        result.append(point.data)
+        result.append(point.val)
         if point.right is not None:
             stack.append(point.right)
         if point.left is not None:
@@ -99,29 +99,29 @@ def iterativePostorder_1stack1(root):
         return 
     stack = []
     while True:
-        print('stack0:',[i.data for i in stack])
+        print('stack0:',[i.val for i in stack])
         print('ans: ', ans)
         while root:
             if root.right is not None:
                 stack.append(root.right)
             stack.append(root)
             root = root.left
-            print('stack1:',[i.data for i in stack])
+            print('stack1:',[i.val for i in stack])
             print('ans: ', ans)
         root = stack.pop()
-        print('stack2:',[i.data for i in stack])
+        print('stack2:',[i.val for i in stack])
         print('ans: ', ans)
         if root.right is not None and len(stack) > 0 and stack[-1] == root.right:
             # if (len(stack)>=0 and stack[-1]==root.right):
                 stack.pop()
                 stack.append(root)
                 root = root.right
-                print('stack3:',[i.data for i in stack])
+                print('stack3:',[i.val for i in stack])
                 print('ans: ', ans)
         else:
-            ans.append(root.data)
+            ans.append(root.val)
             root = None
-            print('stack4:',[i.data for i in stack])
+            print('stack4:',[i.val for i in stack])
             print('ans: ', ans)
         if len(stack)<=0:
             break
@@ -144,7 +144,7 @@ def iterativePostorder_1stack2(root):
         if len(stack)>0 and stack[-1]==root:
             root = root.right
         else:
-            ans.append(root.data)
+            ans.append(root.val)
             root = None
         
 def iterativePostorder_1stack3(root): 
@@ -161,16 +161,16 @@ def iterativePostorder_1stack3(root):
             elif cur.right:
                 stack.append(cur.right)
             else:
-                ans.append(cur.data)
+                ans.append(cur.val)
                 stack.pop()
         elif pre == cur.left:
             if cur.right:
                 stack.append(cur.right)
             else:
-                ans.append(cur.data)
+                ans.append(cur.val)
                 stack.pop()
         else:
-            ans.append(cur.data)
+            ans.append(cur.val)
             stack.pop()
         pre = cur
         
@@ -184,14 +184,14 @@ class Tree():
     def preorder(self,root:Node):
         if root is None:
             return 
-        self.result_preorder.append(root.data)
+        self.result_preorder.append(root.val)
         self.preorder(root.left)
         self.preorder(root.right)
     def inorder(self,root:Node):
         if root is None:
             return 
         self.preorder(root.left)
-        self.result_inorder.append(root.data)
+        self.result_inorder.append(root.val)
         self.preorder(root.right)
     @classmethod
     def build_tree(self, inorder: List[int], postorder: List[int])->Node:

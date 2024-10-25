@@ -43,3 +43,4 @@ class Solution:
         return results
 root = Tree.build_regular_tree()
 solution = Solution()
+print(solution.inorderTraversal(root))
